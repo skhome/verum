@@ -1,0 +1,25 @@
+# https://taskfile.dev
+version: "3"
+
+vars:
+  GO111MODULE: on
+
+tasks:
+  test:
+    desc: run tests
+    vars:
+      TEST_OPTIONS: '{{ default "--format-hide-empty-pkg" .TEST_OPTIONS }}'
+    cmd: go tool gotestsum {{ .TEST_OPTIONS }}
+
+  format:
+    desc: format code
+    cmd: golangci-lint fmt
+
+  lint:
+    desc: lint code
+    cmd: golangci-lint run
+
+  default:
+    cmds:
+      - task: lint
+      - task: test

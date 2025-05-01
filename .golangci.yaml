@@ -1,0 +1,68 @@
+version: "2"
+
+linters:
+  enable:
+    - asasalint
+    - asciicheck
+    - copyloopvar
+    - decorder
+    - depguard
+    - durationcheck
+    - errname
+    - errorlint
+    - exptostd
+    - forbidigo
+    - gochecknoglobals
+    - gochecknoinits
+    - gocritic
+    - misspell
+    - nolintlint
+    - perfsprint
+    - revive
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    - usetesting
+    - wastedassign
+  settings:
+    depguard:
+      rules:
+        main:
+          deny:
+            - pkg: github.com/pkg/errors
+              desc: use stdlib instead
+            - pkg: math/rand$
+              desc: use math/rand/v2 instead
+    forbidigo:
+      forbid:
+        - pattern: ioutil\.*
+    usetesting:
+      context-background: true
+      context-todo: true
+      os-chdir: true
+      os-mkdir-temp: true
+      os-setenv: true
+      os-create-temp: true
+      os-temp-dir: true
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+
+formatters:
+  enable:
+    - gofumpt
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+
+run:
+  go: "1.24"
+  modules-download-mode: "readonly"
+  timeout: "5m"
